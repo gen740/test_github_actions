@@ -1,5 +1,5 @@
 local name = 'Gen740'
 
 function hello()
-  print('Hey Hello')
+	print('Hey Hello')
 end
