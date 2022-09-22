@@ -1,8 +1,8 @@
 
-name: GitHub Actions Demo
+name: Stylua check
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Stylua:
     runs-on: ubuntu-latest
     steps:
       - name: StyLua
