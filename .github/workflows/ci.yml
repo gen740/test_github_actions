@@ -9,4 +9,4 @@ jobs:
         run: pwd
       - name: Clang2
         working-directory: .
-        run: ls
+        run: ls | xargs printf "%s\n"
