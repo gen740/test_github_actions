@@ -1,13 +1,11 @@
-
 name: Stylua check
 on: [push]
 jobs:
   Stylua:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: StyLua
-        uses: JohnnyMorganz/stylua-action@v1.1.1
+      - name: Clang
+        uses: egor-tensin/setup-clang@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          version: 0.15.0
-          args: --check .
+          version: latest
+          platform: x64
