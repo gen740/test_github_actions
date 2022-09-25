@@ -1,8 +1,11 @@
 name: Stylua check
 on: [push]
 jobs:
-  Stylua:
+  Clang_test:
     runs-on: self-hosted
     steps:
+      - name: Clang
+        run: |
+          ls
       - name: Clang
         run: make test
