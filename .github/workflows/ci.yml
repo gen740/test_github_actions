@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clang
-        run: echo "Hello World"
+        run: ls
       - name: Clang
         run: make test
