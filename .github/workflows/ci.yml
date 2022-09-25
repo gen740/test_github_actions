@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clang
-        working-directory: .
+        working-directory: ./test
         run: ls
       - name: Clang
-        working-directory: .
-        run: make test
+        working-directory: ./test
+        run: make hoge
