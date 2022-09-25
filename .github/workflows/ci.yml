@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clang
+        working-directory: .
         run: ls
       - name: Clang
         run: make test
