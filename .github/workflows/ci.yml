@@ -5,7 +5,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Clang
-        uses: egor-tensin/setup-clang@v1
-        with:
-          version: latest
-          platform: x64
+        run: make test
