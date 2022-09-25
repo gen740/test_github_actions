@@ -10,3 +10,6 @@ jobs:
       - name: Clang2
         working-directory: .
         run: ls | xargs printf "%s\n"
+      - name: Make
+        working-directory: .
+        run: make
