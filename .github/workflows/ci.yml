@@ -1,12 +1,12 @@
-name: Stylua check
+name: Test
 on: [push]
 jobs:
   Clang_test:
     runs-on: ubuntu-latest
     steps:
       - name: Clang
-        working-directory: ./test
+        working-directory: ../test
         run: ls
       - name: Clang
-        working-directory: ./test
+        working-directory: ../test
         run: make hoge
