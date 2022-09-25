@@ -7,7 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: install openblas
-        run: apt install libopenblas-dev libomp-dev
+        run: sudo apt install libopenblas-dev libomp-dev
       - name: Clang
         working-directory: .
         run: pwd
