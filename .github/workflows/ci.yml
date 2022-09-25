@@ -2,7 +2,7 @@ name: Stylua check
 on: [push]
 jobs:
   Clang_test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Clang
         run: echo "Hello World"
