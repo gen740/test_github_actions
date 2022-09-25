@@ -12,10 +12,10 @@ jobs:
         run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - name: Clang
         working-directory: .
-        run: pwd
-      - name: Clang2
+        run: which clang++
+      - name: Clang-15
         working-directory: .
-        run: ls | xargs printf "%s\n"
+        run: which clang++-15
       - name: Make
         working-directory: .
         run: make
