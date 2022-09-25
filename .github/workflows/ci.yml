@@ -9,7 +9,7 @@ jobs:
       - name: install openblas
         run: sudo apt install libopenblas-dev libomp-dev
       - name: install llvm latest
-        run: bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
       - name: Clang
         working-directory: .
         run: pwd
