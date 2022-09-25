@@ -2,11 +2,11 @@ name: Test
 on: [push]
 jobs:
   Clang_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Clang
-        working-directory: ../test
+        working-directory: .
+        run: pwd
+      - name: Clang2
+        working-directory: .
         run: ls
-      - name: Clang
-        working-directory: ../test
-        run: make hoge
