@@ -8,4 +8,5 @@ jobs:
         working-directory: .
         run: ls
       - name: Clang
+        working-directory: .
         run: make test
