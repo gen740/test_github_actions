@@ -1,9 +1,11 @@
-# test.py
-def test_print_captured():
-    print("this should NOT be shown when test passes")
-    assert 1 + 1 == 2
+from pytest import mark
+from tempfile_pool import NamedTemporaryFilePool
+
+logfile = "log.txt"
 
 
-def test_print_on_failure():
-    print("this should be shown when test fails")
-    assert 1 + 1 == 3
+@mark.parametrize("i", range(10000))
+def test_case(i):
+    with NamedTemporaryFilePool() as pool:
+        with open(logfile, "a") as f:
+            f.write(f"Test case {i} started {pool.name}\n")
