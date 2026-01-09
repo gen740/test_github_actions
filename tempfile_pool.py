@@ -11,9 +11,6 @@ from types import TracebackType
 from typing import Any
 from typing import IO
 
-logfile_name = "test_logfile.log"
-
-
 class NamedTemporaryFilePool:
     tempfile_pool: list[IO[Any]] = []
 
@@ -34,8 +31,6 @@ class NamedTemporaryFilePool:
     def cleanup(self) -> None:
         gc.collect()
         for i in self.tempfile_pool:
-            with open(logfile_name, "a") as logfile:
-                logfile.write(f"Deleting temporary file: {i.name}\n")
             os.unlink(i.name)
 
     def __enter__(self) -> IO[Any]:
