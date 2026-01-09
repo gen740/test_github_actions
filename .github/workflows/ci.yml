@@ -30,4 +30,9 @@ jobs:
         run: python -m pytest test.py -n auto
 
       - name: Cat log
+        if: always()
         run: cat log.txt
+
+      - name: Cat log
+        if: always()
+        run: cat test_logfile.log
