@@ -36,6 +36,9 @@ def test_case(i):
         session.add(user)
         session.commit()
 
+        if i % 100 == 0:
+            assert False, f"Intentional failure at iteration {i}"
+
         # セッションと接続を明示的にクローズ
         # session.close()
         # engine.dispose()
