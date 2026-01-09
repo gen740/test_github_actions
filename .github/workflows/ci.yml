@@ -24,7 +24,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install pytest
-        run: python -m pip install --upgrade pip pytest pytest-xdist
+        run: python -m pip install --upgrade pip pytest pytest-xdist sqlalchemy
 
       - name: Run tests
         run: python -m pytest test.py -n auto
