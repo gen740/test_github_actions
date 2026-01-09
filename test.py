@@ -34,6 +34,7 @@ class StorageSupplier(AbstractContextManager):
         if self.tempfile:
             self.tempfile.close()
 
+_leaked_session = []
 
 @mark.parametrize("i", range(100))
 def test_case(i):
@@ -55,5 +56,7 @@ def test_case(i):
         user = User(name="alice")
         session.add(user)
         session.commit()
+
+        _leaked_session.append(session)
 
         assert False, "Intentional Failure for Testing"
