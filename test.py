@@ -12,6 +12,9 @@ from sqlalchemy.orm.scoping import scoped_session as ScopedSessionType
 from tempfile_pool import NamedTemporaryFilePool
 
 
+scoped_ses: Optional[ScopedSessionType] = None
+
+
 class StorageSupplier(AbstractContextManager[Session]):
     def __init__(self, **kwargs: Any) -> None:
         self.kwargs = kwargs
@@ -29,6 +32,7 @@ class StorageSupplier(AbstractContextManager[Session]):
         # scoped_session を作成し、Session インスタンスを返す
         factory = sessionmaker(bind=self.engine)
         self.scoped = scoped_session(factory)
+        scoped_ses = self.scoped  # グローバル変数に保存（デバッグ用）
         return self.scoped()
 
     def __exit__(
@@ -37,8 +41,6 @@ class StorageSupplier(AbstractContextManager[Session]):
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
     ) -> None:
-        # 要件: scoped_session / Session を閉じない（remove/closeしない）
-        # ただし Engine と tempfile はこの CM の責務として処理する
         if self.engine is not None:
             self.engine.dispose()
         if self.tempfile is not None:
