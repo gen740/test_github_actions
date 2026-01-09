@@ -11,6 +11,10 @@ from sqlalchemy.orm.scoping import scoped_session as ScopedSessionType
 
 from tempfile_pool import NamedTemporaryFilePool
 
+import gc
+
+gc.disable()
+
 
 scoped_ses: Optional[ScopedSessionType] = None
 
