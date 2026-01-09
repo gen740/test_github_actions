@@ -1,4 +1,3 @@
-from typing import override
 from pytest import mark
 import sys
 from sqlalchemy import Column, Integer, String, create_engine, Engine
@@ -6,6 +5,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from contextlib import AbstractContextManager
 from typing import Any, IO
 
+from types import TracebackType
 from tempfile_pool import NamedTemporaryFilePool
 
 logfile = "log.txt"
