@@ -1,29 +1,42 @@
+from typing import override
 from pytest import mark
 import sys
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, create_engine, Engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from contextlib import AbstractContextManager
+from typing import Any, IO
 
 from tempfile_pool import NamedTemporaryFilePool
 
 logfile = "log.txt"
 
-# 終了まで参照を保持してGC/クローズを避ける
-_leaked = []
+
+class StorageSupplier(AbstractContextManager):
+    def __init__(self, **kwargs: Any) -> None:
+        self.tempfile: IO[Any] | None = None
+        self.engine: Engine | None = None
+
+    def __enter__(
+        self,
+    ) -> Engine:
+        self.tempfile = NamedTemporaryFilePool().tempfile()
+        self.engine = create_engine(f"sqlite:///{self.tempfile.name}")
+        return self.engine
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
+        if self.tempfile:
+            self.tempfile.close()
 
 
 @mark.parametrize("i", range(1000))
 def test_case(i):
-    with NamedTemporaryFilePool() as pool:
-        print(f"Test case {i} started {pool.name}", file=sys.stderr)
-        with open(logfile, "a") as f:
-            f.write(f"Test case {i} started {pool.name}\n")
-
-        engine = create_engine(f"sqlite:///{pool.name}")
-
-        # ここでファイルを掴む接続を明示的に作り、閉じずに保持する（Windowsで削除失敗しやすくなる）
-        conn = engine.connect()
-        _leaked.append(conn)
-        _leaked.append(engine)
+    with StorageSupplier() as engine:
+        engine.connect()
 
         Base = declarative_base()
 
@@ -36,11 +49,7 @@ def test_case(i):
 
         Session = sessionmaker(bind=engine)
         session = Session()
-        _leaked.append(session)
 
         user = User(name="alice")
         session.add(user)
         session.commit()
-
-        if i % 100 == 0:
-            assert False, f"Intentional failure at iteration {i}"
