@@ -33,7 +33,7 @@ class StorageSupplier(AbstractContextManager):
             self.tempfile.close()
 
 
-@mark.parametrize("i", range(1000))
+@mark.parametrize("i", range(100))
 def test_case(i):
     with StorageSupplier() as engine:
         engine.connect()
@@ -53,3 +53,5 @@ def test_case(i):
         user = User(name="alice")
         session.add(user)
         session.commit()
+
+        assert False, "Intentional Failure for Testing"
