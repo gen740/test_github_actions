@@ -29,6 +29,8 @@ class StorageSupplier(AbstractContextManager):
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
     ) -> None:
+        if self.engine:
+            self.engine.dispose()
         if self.tempfile:
             self.tempfile.close()
 
